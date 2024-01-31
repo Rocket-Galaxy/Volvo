@@ -1,0 +1,120 @@
+SQL
+
+CREATE TABLE Alunos 
+( 
+ Id_aluno INT PRIMARY KEY AUTO_INCREMENT,  
+ CPF_aluno CHAR(n) NOT NULL,  
+ Data_nascimento_aluno DATE NOT NULL,  
+ Ativo_aluno VARCHAR(n) NOT NULL,  
+ Telefone_aluno VARCHAR(n) NOT NULL,  
+ Email_aluno VARCHAR(n),  
+ Nome_aluno VARCHAR(n) NOT NULL,  
+ idEnderecos INT NOT NULL,  
+); 
+
+CREATE TABLE Planos 
+( 
+ Chave INT PRIMARY KEY AUTO_INCREMENT,  
+ Duracao_plano VARCHAR(n) NOT NULL,  
+ Valor_plano VARCHAR(n) NOT NULL,  
+ Descricao_plano VARCHAR(n) NOT NULL,  
+); 
+
+CREATE TABLE Enderecos 
+( 
+ Id_endereco INT PRIMARY KEY AUTO_INCREMENT,  
+ Rua_endereco VARCHAR(n) NOT NULL,  
+ CEP_endereco CHAR(n) NOT NULL,  
+ Numero_endereco VARCHAR(n) NOT NULL,  
+ Bairro_endereco VARCHAR(n) NOT NULL,  
+ Complemento_endereco VARCHAR(n),  
+ Cidade_endereco VARCHAR(n) NOT NULL,  
+); 
+
+CREATE TABLE Cargos 
+( 
+ Id_cargo INT PRIMARY KEY AUTO_INCREMENT,  
+ Descricao_cargo VARCHAR(n) NOT NULL,  
+); 
+
+CREATE TABLE Funcionarios 
+( 
+ CPF_funcionario VARCHAR(n) NOT NULL,  
+ Data_nascimento_funcionario DATE NOT NULL,  
+ Telefone_funcionario INT,  
+ Id_funcionario INT PRIMARY KEY AUTO_INCREMENT,  
+ Ativo_funcionario CHAR(n) NOT NULL,  
+ Extras_funcionario FLOAT,  
+ Email_funcionario VARCHAR(n),  
+ Nome_funcionario VARCHAR(n) NOT NULL,  
+ idCargos INT NOT NULL,  
+); 
+
+CREATE TABLE Aulas 
+( 
+ Id_aula INT PRIMARY KEY AUTO_INCREMENT,  
+ Descricao_aula VARCHAR(n) NOT NULL,  
+ Dias_aula VARCHAR(n) NOT NULL,  
+ Horarios_aula VARCHAR(n) NOT NULL,  
+); 
+
+CREATE TABLE Inventario 
+( 
+ Id_inventario INT PRIMARY KEY AUTO_INCREMENT,  
+ Quantidade_inventario INT NOT NULL,  
+ Descricao_item_inventario VARCHAR(n) NOT NULL,  
+); 
+
+CREATE TABLE Entradas 
+( 
+ Id_entrada INT PRIMARY KEY AUTO_INCREMENT,  
+ Valor_entrada FLOAT NOT NULL,  
+ Data_entrada DATE NOT NULL,  
+ idAlunos INT NOT NULL,  
+); 
+
+CREATE TABLE Saidas 
+( 
+ Id_saida INT PRIMARY KEY AUTO_INCREMENT,  
+ Data_saida DATE NOT NULL,  
+ Descricao_saida VARCHAR(n) NOT NULL,  
+ Valor_saida FLOAT NOT NULL,  
+ idFuncionarios INT NOT NULL,  
+); 
+
+CREATE TABLE Contrata 
+( 
+ Chave INT PRIMARY KEY,  
+ Id_aluno INT PRIMARY KEY,  
+); 
+
+CREATE TABLE Possui 
+( 
+ Id_endereco INT PRIMARY KEY,  
+ Id_funcionario INT PRIMARY KEY,  
+); 
+
+CREATE TABLE Agenda 
+( 
+ Id_aluno INT PRIMARY KEY,  
+ Id_aula INT PRIMARY KEY,  
+); 
+
+CREATE TABLE Realiza 
+( 
+ Id_funcionario INT PRIMARY KEY,  
+ Id_aula INT PRIMARY KEY,  
+); 
+
+ALTER TABLE Alunos ADD FOREIGN KEY(idEnderecos) REFERENCES Alunos (idEnderecos)
+ALTER TABLE Funcionarios ADD FOREIGN KEY(idCargos) REFERENCES Alunos (idCargos)
+ALTER TABLE Entradas ADD FOREIGN KEY(idAlunos) REFERENCES Alunos (idAlunos)
+ALTER TABLE Saidas ADD FOREIGN KEY(idFuncionarios) REFERENCES Alunos (idFuncionarios)
+ALTER TABLE Contrata ADD FOREIGN KEY(Chave) REFERENCES Planos (Chave)
+ALTER TABLE Contrata ADD FOREIGN KEY(Id_aluno) REFERENCES Alunos (Id_aluno)
+ALTER TABLE Possui ADD FOREIGN KEY(Id_endereco) REFERENCES Enderecos (Id_endereco)
+ALTER TABLE Possui ADD FOREIGN KEY(Id_funcionario) REFERENCES Funcionarios (Id_funcionario)
+ALTER TABLE Agenda ADD FOREIGN KEY(Id_aluno) REFERENCES Alunos (Id_aluno)
+ALTER TABLE Agenda ADD FOREIGN KEY(Id_aula) REFERENCES Aulas (Id_aula)
+ALTER TABLE Realiza ADD FOREIGN KEY(Id_funcionario) REFERENCES Funcionarios (Id_funcionario)
+ALTER TABLE Realiza ADD FOREIGN KEY(Id_aula) REFERENCES Aulas (Id_aula)
